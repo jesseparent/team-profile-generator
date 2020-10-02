@@ -4,7 +4,10 @@
   "description": "generate a Web page of my team",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest" : {
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
