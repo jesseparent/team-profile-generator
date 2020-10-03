@@ -4,6 +4,7 @@
   "description": "generate a Web page of my team",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest"
   },
   "jest" : {
