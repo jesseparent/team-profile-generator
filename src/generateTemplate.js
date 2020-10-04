@@ -2,6 +2,7 @@ const Manager = require("../lib/Manager");
 const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
 
+// Items unique for each employee class
 const employeeMarkupItems = {
   "Manager" : {
     "icon" : '<i class="fas fa-mug-hot"></i>',
@@ -17,6 +18,7 @@ const employeeMarkupItems = {
   }
 };
 
+// There are specific rules for how to display the last employee property, especially for the Github link
 const displayExtraProperty = (employee) =>{
   switch (employee.getRole()) {
     case "Manager":
@@ -51,12 +53,13 @@ const generateTemplate = (employeeArray) => {
       </div>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row justify-content-center">
   `;
+  // Loop through employees sent to this function and display each in a Bootstrap card
   for(let i=0; i < employeeArray.length; i++){
     html += `
         <!-- Card Template -->
-        <div class="card" style="max-width: 18rem;">
+        <div class="card mx-3 shadow" style="max-width: 18rem;">
           <div class="card-header text-white bg-primary">
             <h2>${employeeArray[i].getName()}</h2>
             <h3>${employeeMarkupItems[employeeArray[i].getRole()].icon} ${employeeArray[i].getRole()}</h3>

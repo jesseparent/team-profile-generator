@@ -6,8 +6,8 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
 const generateTemplate = require("./src/generateTemplate");
-// const { create } = require("domain");
 
+// Employees array for all employee objects generated
 const employees = [];
 
 // Validate that email is a valid address format
@@ -17,39 +17,28 @@ const validateEmail = (email) => {
   return re.test(email.toLowerCase());
 }
 
-const extraQuestion = (employeeType) =>{
+// information for the employee's last question
+const extraInformation = (employeeType) =>{
   switch (employeeType) {
     case "manager":
-      return "\tWhat is the manager's office number?";
+      return "the manager's office number";
     case "engineer":
-      return "\tWhat is the engineer's github name?";
+      return "the engineer's github name";
     case "intern":
-      return "\tWhat is the intern's school?";
+      return "the intern's school";
     default:
       return "";
   }
 };
 
-const extraValidation = (employeeType) =>{
-  switch (employeeType) {
-    case "manager":
-      return "Please enter the manager's office number!";
-    case "engineer":
-      return "Please enter the engineer's github name!";
-    case "intern":
-      return "Please enter the intern's school!";
-    default:
-      return "";
-  }
-};
-
+// Ask questions to gather information about the current employee
 const createEmployee = (employeeType) => {
   console.log("Enter the following information for the " + employeeType + ":")
   return inquirer.prompt([
     {
       type: 'input',
       name: 'name',
-      message: '\tWhat is the ' + employeeType + '\'s name?',
+      message: '   What is the ' + employeeType + '\'s name?',
       validate: nameInput => {
         if (nameInput) {
           return true;
@@ -62,7 +51,7 @@ const createEmployee = (employeeType) => {
     {
       type: 'input',
       name: 'id',
-      message: '\tWhat is the ' + employeeType + '\'s ID?',
+      message: '   What is the ' + employeeType + '\'s ID?',
       validate: idInput => {
         if (idInput) {
           return true;
@@ -75,7 +64,7 @@ const createEmployee = (employeeType) => {
     {
       type: 'input',
       name: 'email',
-      message: '\tWhat is the ' + employeeType + '\'s email address?',
+      message: '   What is the ' + employeeType + '\'s email address?',
       validate: emailInput => {
         if (emailInput) {
           // validate email entered is in correct format
@@ -95,12 +84,12 @@ const createEmployee = (employeeType) => {
     {
       type: 'input',
       name: 'extraInfo',
-      message: extraQuestion(employeeType),
+      message: '   What is ' + extraInformation(employeeType) + '?',
       validate: extraInput => {
         if (extraInput) {
           return true;
         } else {
-          console.log(extraValidation(employeeType));
+          console.log("Please enter " + extraInformation(employeeType) + "!");
           return false;
         }
       }
@@ -115,6 +104,7 @@ const createEmployee = (employeeType) => {
     .then(data => {
       const { name, id, email, extraInfo, nextAction } = data;
 
+      // Create employee object specific to type being asked about and push it to employees array
       switch (employeeType) {
         case "manager":
           employees.push(new Manager(name, id, email, extraInfo));
@@ -127,6 +117,7 @@ const createEmployee = (employeeType) => {
           break;
       }
 
+      // Decide what to do next: exit or ask for a specific employee's information
       if (nextAction === "None") {
         return;
       }
@@ -136,6 +127,7 @@ const createEmployee = (employeeType) => {
     });
 };
 
+// Function to write HTML file
 const writeToFile = (fileName, fileContent) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(fileName, fileContent, err => {
@@ -155,16 +147,18 @@ const writeToFile = (fileName, fileContent) => {
   });
 }
 
+// Create the first employee - The manager
 createEmployee("manager")
-.then(managerData => {
-  // const {name, id, email, officeNumber, nextAction} = managerData;
-  // employees.push(new Manager(name, id, email, officeNumber))
+.then((managerData) => {
+  // Generate the HTML needed for the Web page
   return generateTemplate(employees);
 })
 .then(htmlData => {
+  // Write the HTML to a file
   return writeToFile("./dist/myteam.html", htmlData);
 })
-.then(result => { // Give feedback to user 
+.then(result => { 
+  // Give feedback to user on whether the file was written or not
   if (result.ok) {
     console.log(result.message);
   }
