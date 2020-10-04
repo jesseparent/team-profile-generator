@@ -4,15 +4,15 @@ const Intern = require("../lib/Intern");
 
 const employeeMarkupItems = {
   "Manager" : {
-    "icon" : "<i></i>",
+    "icon" : '<i class="fas fa-mug-hot"></i>',
     "extraTitle" : "Office Number"
   },
   "Engineer" : {
-    "icon" : "<i></i>",
+    "icon" : '<i class="fas fa-glasses"></i>',
     "extraTitle" : "GitHub"
   },
   "Intern" : {
-    "icon" : "<i></i>",
+    "icon" : '<i class="fas fa-user-graduate"></i>',
     "extraTitle" : "School"
   }
 };
@@ -20,7 +20,7 @@ const employeeMarkupItems = {
 const displayExtraProperty = (employee) =>{
   switch (employee.getRole()) {
     case "Manager":
-      return employee.getSchool();
+      return employee.getOfficeNumber();
     case "Engineer":
       return '<a href="https://github.com/' + employee.getGithub() + '/" target="_blank" rel="noreferrer noopener">' + employee.getGithub() + '</a>';
     case "Intern":
@@ -39,7 +39,8 @@ const generateTemplate = (employeeArray) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Team</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
   </head>
   <body>
     <div class="container-fluid">
@@ -50,7 +51,8 @@ const generateTemplate = (employeeArray) => {
       </div>
     </div>
     <div class="container">
-      <div class="row">`;
+      <div class="row">
+  `;
   for(let i=0; i < employeeArray.length; i++){
     html += `
         <!-- Card Template -->

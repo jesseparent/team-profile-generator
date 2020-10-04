@@ -136,9 +136,36 @@ const createEmployee = (employeeType) => {
     });
 };
 
+const writeToFile = (fileName, fileContent) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(fileName, fileContent, err => {
+      // if there's an error, reject the Promise and send the error to the Promise's `.catch()` method
+      if (err) {
+        reject(err);
+        // return out of the function here to make sure the Promise doesn't accidentally execute the resolve() function as well
+        return;
+      }
+
+      // if everything went well, resolve the Promise and send the successful data to the `.then()` method
+      resolve({
+        ok: true,
+        message: 'HTML File created!'
+      });
+    });
+  });
+}
+
 createEmployee("manager")
 .then(managerData => {
   // const {name, id, email, officeNumber, nextAction} = managerData;
   // employees.push(new Manager(name, id, email, officeNumber))
-  console.log(generateTemplate(employees));
+  return generateTemplate(employees);
+})
+.then(htmlData => {
+  return writeToFile("./dist/myteam.html", htmlData);
+})
+.then(result => { // Give feedback to user 
+  if (result.ok) {
+    console.log(result.message);
+  }
 });
