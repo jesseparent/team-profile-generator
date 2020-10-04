@@ -4,7 +4,9 @@ const inquirer = require("inquirer");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const { create } = require("domain");
+
+const generateTemplate = require("./src/generateTemplate");
+// const { create } = require("domain");
 
 const employees = [];
 
@@ -138,7 +140,5 @@ createEmployee("manager")
 .then(managerData => {
   // const {name, id, email, officeNumber, nextAction} = managerData;
   // employees.push(new Manager(name, id, email, officeNumber))
-  console.log(managerData);
-  console.log(employees);
-  console.log(employees[0].getRole());
+  console.log(generateTemplate(employees));
 });
