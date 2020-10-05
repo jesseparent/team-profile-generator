@@ -47,7 +47,7 @@ const generateTemplate = (employeeArray) => {
   <body>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 jumbotron mb-3">
+        <div class="col-12 jumbotron mb-3 text-white bg-danger">
           <h1 class="text-center">My Team</h1>
         </div>
       </div>
@@ -59,7 +59,7 @@ const generateTemplate = (employeeArray) => {
   for(let i=0; i < employeeArray.length; i++){
     html += `
         <!-- Card Template -->
-        <div class="card mx-3 shadow" style="max-width: 18rem;">
+        <div class="card mx-3 mb-3 shadow" style="max-width: 18rem;">
           <div class="card-header text-white bg-primary">
             <h2>${employeeArray[i].getName()}</h2>
             <h3>${employeeMarkupItems[employeeArray[i].getRole()].icon} ${employeeArray[i].getRole()}</h3>
